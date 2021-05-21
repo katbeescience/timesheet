@@ -3,15 +3,22 @@
 # mkbusby@email.arizona.edu
 # May 21, 2021
 
+# Load packages
+
+# install.packages("chron")
+
 # Load libraries
 
-library(lubridate)
+library(chron)
 
 # Calculate time difference between start and end time. We'll make a function.
 
-dur <- function(start, end){
-  startampm <- as.time(start)
-  endampm <- as.time(end)
-  duration <- end - start
-  return(duration)
-} 
+convert.time <- function(start, end){
+starttime <- strptime(start, "%I:%M %p")
+endtime <- strptime(end, "%I:%M %p")
+dur.table <- data.frame(starttime, endtime)
+dur.table$diff <- dur.table$endtime - dur.table$starttime
+sum <- sum(dur.table$diff)
+return(sum)
+}
+
